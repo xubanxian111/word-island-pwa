@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#f8f2e7" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="词汇小岛" />
+    <meta
+      name="description"
+      content="词汇小岛：为 9 岁孩子设计的 1000 英语高频词冲刺学习应用。"
+    />
+    <title>词汇小岛 · 1000 词冲刺</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" sizes="152x152" href="icon-152.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="icon-167.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="brand" type="button" data-view-target="dashboard" aria-label="回到今日学习">
+          <span class="brand-mark" aria-hidden="true">W</span>
+          <span>
+            <strong>词汇小岛</strong>
+            <small>1000 词冲刺</small>
+          </span>
+        </button>
+        <button class="quiet-button" id="parentShortcut" type="button" aria-label="打开家长中心">
+          <span aria-hidden="true">◎</span>
+          家长
+        </button>
+      </header>
+
+      <main class="main-content">
+        <section class="view is-active" id="view-dashboard" aria-labelledby="dashboardTitle">
+          <div class="hero-layout">
+            <article class="hero-card">
+              <div class="hero-copy">
+                <div class="eyebrow">
+                  <span class="pulse-dot" aria-hidden="true"></span>
+                  12 周 · 1000 词计划
+                </div>
+                <h1 id="dashboardTitle">
+                  <span id="greetingText">晚上好</span>，<span id="childName">小小探险家</span>
+                </h1>
+                <p id="heroMessage">今天学 20 个新词，再花几分钟把昨天见过的词找回来。</p>
+                <div class="hero-meta">
+                  <span><b id="heroNewCount">20</b> 个新词</span>
+                  <span><b id="heroReviewCount">0</b> 个复习</span>
+                  <span><b>30–35</b> 分钟</span>
+                </div>
+                <button class="primary-button hero-button" id="startLessonButton" type="button">
+                  <span id="startLessonLabel">开始今天的学习</span>
+                  <span class="button-arrow" aria-hidden="true">→</span>
+                </button>
+                <button class="text-button" id="quickReviewButton" type="button">
+                  先用 5 分钟唤醒旧词
+                </button>
+                <p class="privacy-note">学习记录只保存在这台设备上</p>
+              </div>
+            </article>
+
+            <aside class="orbit-card" aria-label="1000词总进度">
+              <div class="progress-orbit" id="progressOrbit">
+                <div class="orbit-inner">
+                  <span class="orbit-value" id="orbitPercent">0%</span>
+                  <span class="orbit-label">1000 词旅程</span>
+                </div>
+              </div>
+              <div class="orbit-caption">
+                <strong id="orbitWordCount">0 / 1000</strong>
+                <span>已经认识的词</span>
+              </div>
+            </aside>
+          </div>
+
+          <div class="stats-grid" aria-label="学习概况">
+            <article class="stat-card">
+              <span class="stat-icon mint" aria-hidden="true">✓</span>
+              <div>
+                <span>较熟练</span>
+                <strong id="stableWordCount">0</strong>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon sun" aria-hidden="true">↺</span>
+              <div>
+                <span>今日待复习</span>
+                <strong id="dueWordCount">0</strong>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon sky" aria-hidden="true">◎</span>
+              <div>
+                <span>答题正确率</span>
+                <strong id="accuracyValue">—</strong>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon coral" aria-hidden="true">✦</span>
+              <div>
+                <span>连续学习</span>
+                <strong id="streakValue">0 天</strong>
+              </div>
+            </article>
+          </div>
+
+          <div class="dashboard-columns">
+            <section class="panel today-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">TODAY'S TRAIL</span>
+                  <h2>今晚的三小段</h2>
+                </div>
+                <span class="soft-badge" id="todayStatusBadge">待开始</span>
+              </div>
+              <ol class="mission-list">
+                <li>
+                  <span class="mission-number">01</span>
+                  <div>
+                    <strong>先找回旧词</strong>
+                    <p id="missionReviewText">今天没有到期的复习</p>
+                  </div>
+                  <span class="mission-dot" id="missionReviewDot"></span>
+                </li>
+                <li>
+                  <span class="mission-number">02</span>
+                  <div>
+                    <strong>第一组新词</strong>
+                    <p>10 个词，学完马上做一轮小测</p>
+                  </div>
+                  <span class="mission-dot" id="missionBatchOneDot"></span>
+                </li>
+                <li>
+                  <span class="mission-number">03</span>
+                  <div>
+                    <strong>第二组新词</strong>
+                    <p>再学 10 个，最后混合回收</p>
+                  </div>
+                  <span class="mission-dot" id="missionBatchTwoDot"></span>
+                </li>
+              </ol>
+              <div class="sleep-tip">
+                <span aria-hidden="true">☾</span>
+                <p><strong>睡前模式</strong> 最后一次只做听音回忆，不冲刺，也不刷新题。</p>
+              </div>
+            </section>
+
+            <section class="panel recent-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">WORD KEEPSAKES</span>
+                  <h2>最近遇见的词</h2>
+                </div>
+                <button class="mini-link" type="button" data-view-target="map">看地图</button>
+              </div>
+              <div class="recent-words" id="recentWords">
+                <div class="empty-recent">
+                  <span aria-hidden="true">🌱</span>
+                  <p>第一颗词汇种子还在等你。</p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-session" aria-label="词汇学习">
+          <div class="session-topbar">
+            <button class="circle-button" id="exitSessionButton" type="button" aria-label="退出本次学习">
+              <span aria-hidden="true">←</span>
+            </button>
+            <div class="session-progress-wrap">
+              <div class="session-progress-meta">
+                <span id="sessionPhaseLabel">准备开始</span>
+                <span id="sessionStepLabel">0 / 0</span>
+              </div>
+              <div class="session-progress" aria-hidden="true">
+                <span id="sessionProgressBar"></span>
+              </div>
+            </div>
+            <button class="circle-button sound-toggle" id="sessionSoundButton" type="button" aria-label="开关提示音">
+              <span aria-hidden="true">♪</span>
+            </button>
+          </div>
+          <div class="session-stage" id="sessionStage" aria-live="polite"></div>
+        </section>
+
+        <section class="view" id="view-map" aria-labelledby="mapTitle">
+          <div class="page-heading">
+            <div>
+              <span class="section-kicker">THE 1000-WORD MAP</span>
+              <h1 id="mapTitle">词汇岛地图</h1>
+              <p>每走完 50 个词，就会点亮一座新的小岛。</p>
+            </div>
+            <div class="map-progress-pill">
+              <strong id="mapProgressValue">0</strong>
+              <span>/ 1000</span>
+            </div>
+          </div>
+          <div class="map-legend">
+            <span><i class="legend-dot complete"></i>已经走过</span>
+            <span><i class="legend-dot current"></i>正在这里</span>
+            <span><i class="legend-dot locked"></i>尚未抵达</span>
+          </div>
+          <div class="island-grid" id="islandGrid"></div>
+          <div class="map-footer-card">
+            <span aria-hidden="true">🧭</span>
+            <div>
+              <strong>路线按 12 周安排</strong>
+              <p>先认读，后拼写。地图记录的是“遇见过”，真正掌握还要看复习结果。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-parent" aria-labelledby="parentTitle">
+          <div class="page-heading parent-heading">
+            <div>
+              <span class="section-kicker">PARENT VIEW</span>
+              <h1 id="parentTitle">家长中心</h1>
+              <p>关注长期记住，不用盯着孩子刷了多少张卡。</p>
+            </div>
+            <button class="quiet-button" type="button" data-view-target="dashboard">回到孩子界面</button>
+          </div>
+
+          <div class="parent-summary-grid">
+            <article class="parent-metric">
+              <span>已接触词数</span>
+              <strong id="parentStartedCount">0</strong>
+              <small>目标 1000</small>
+            </article>
+            <article class="parent-metric">
+              <span>较稳定词数</span>
+              <strong id="parentStableCount">0</strong>
+              <small>连续复习达到 3 级</small>
+            </article>
+            <article class="parent-metric">
+              <span>今日复习积压</span>
+              <strong id="parentDueCount">0</strong>
+              <small>到期未复习的词</small>
+            </article>
+            <article class="parent-metric">
+              <span>累计正确率</span>
+              <strong id="parentAccuracy">—</strong>
+              <small>所有测验结果</small>
+            </article>
+          </div>
+
+          <div class="parent-columns">
+            <section class="panel activity-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">LAST 7 DAYS</span>
+                  <h2>近七天学习节奏</h2>
+                </div>
+                <span class="soft-badge">新词 + 复习</span>
+              </div>
+              <div class="week-chart" id="weekChart"></div>
+              <p class="chart-note">柱子越高代表当天完成的词汇练习越多。空白不是失败，休息也很重要。</p>
+            </section>
+
+            <section class="panel settings-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">LEARNING SETTINGS</span>
+                  <h2>学习设置</h2>
+                </div>
+              </div>
+              <label class="field-label" for="childNameInput">孩子称呼</label>
+              <input class="text-field" id="childNameInput" maxlength="16" autocomplete="off" />
+
+              <label class="field-label" for="dailyNewSelect">每天新词数量</label>
+              <select class="text-field" id="dailyNewSelect">
+                <option value="10">10 个 · 先适应</option>
+                <option value="15">15 个 · 更稳妥</option>
+                <option value="20">20 个 · 冲刺</option>
+              </select>
+              <p class="field-help">修改后从下一次新计划开始生效。</p>
+
+              <div class="toggle-row">
+                <div>
+                  <strong>互动音效</strong>
+                  <span>答对和提示时播放轻提示音</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="soundSetting" />
+                  <span></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <strong>夜间配色</strong>
+                  <span>降低睡前屏幕亮度与刺激</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="nightSetting" />
+                  <span></span>
+                </label>
+              </div>
+              <button class="primary-button" id="saveSettingsButton" type="button">保存设置</button>
+            </section>
+          </div>
+
+          <section class="panel insight-panel">
+            <div class="insight-icon" aria-hidden="true">💡</div>
+            <div>
+              <span class="section-kicker">TODAY'S GUIDANCE</span>
+              <h2 id="parentGuidanceTitle">先开始今天的第一组</h2>
+              <p id="parentGuidanceText">
+                今天还不需要调整计划。让孩子按 10 个一组完成，如果第二组明显疲劳，就停在两组之间。
+              </p>
+            </div>
+          </section>
+
+          <div class="data-actions">
+            <button class="secondary-button" id="exportDataButton" type="button">导出学习记录</button>
+            <button class="secondary-button" id="importDataButton" type="button">导入学习记录</button>
+            <input
+              id="importDataInput"
+              type="file"
+              accept="application/json,.json"
+              hidden
+            />
+            <button class="danger-text-button" id="resetDataButton" type="button">清空本机学习进度</button>
+          </div>
+
+          <section class="panel install-panel">
+            <div class="install-icon" aria-hidden="true">▣</div>
+            <div class="install-copy">
+              <span class="section-kicker">INSTALL ON IPAD</span>
+              <h2 id="installTitle">把词汇小岛安装到 iPad</h2>
+              <p id="installDescription">
+                安装后会从主屏幕全屏打开，并可在首次联网加载后离线学习。
+              </p>
+              <ol class="install-steps" id="installSteps">
+                <li><span>1</span>使用 Safari 打开已部署的 HTTPS 地址</li>
+                <li><span>2</span>点击浏览器“分享”按钮</li>
+                <li><span>3</span>选择“添加到主屏幕”</li>
+                <li><span>4</span>从主屏幕打开一次，完成离线缓存</li>
+              </ol>
+              <div class="install-actions">
+                <button class="secondary-button" id="installAppButton" type="button" hidden>
+                  安装到这台设备
+                </button>
+                <span class="install-status" id="installStatusBadge">尚未按安装模式运行</span>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" id="bottomNav" aria-label="主要页面">
+        <button class="nav-item is-active" type="button" data-view-target="dashboard">
+          <span aria-hidden="true">⌂</span>
+          <small>今天</small>
+        </button>
+        <button class="nav-item" type="button" data-view-target="map">
+          <span aria-hidden="true">◇</span>
+          <small>词汇岛</small>
+        </button>
+        <button class="nav-item" type="button" data-view-target="parent">
+          <span aria-hidden="true">◎</span>
+          <small>家长</small>
+        </button>
+      </nav>
+    </div>
+
+    <div class="modal-backdrop is-visible" id="onboardingModal" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+      <div class="modal-card onboarding-card">
+        <div class="onboarding-mark" aria-hidden="true">🌱</div>
+        <span class="section-kicker">WELCOME TO WORD ISLAND</span>
+        <h2 id="onboardingTitle">先给这段旅程一个名字</h2>
+        <p>我们会在本机保存学习进度，不要求账号，也不会把孩子姓名上传到网络。</p>
+        <label class="field-label" for="onboardingName">孩子怎么称呼？</label>
+        <input
+          class="text-field large-field"
+          id="onboardingName"
+          maxlength="16"
+          placeholder="例如：小宇"
+          autocomplete="off"
+        />
+        <button class="primary-button" id="onboardingStartButton" type="button">开始 1000 词旅程</button>
+        <p class="modal-footnote">默认采用 20 个新词/天的冲刺方案，可随时在家长中心调整。</p>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="data.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
